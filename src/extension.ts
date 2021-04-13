@@ -44,6 +44,7 @@ import {
 import { addServerNamespaceToWorkspace } from "./commands/addServerNamespaceToWorkspace";
 import { jumpToTagAndOffset } from "./commands/jumpToTagAndOffset";
 import { connectFolderToServerNamespace } from "./commands/connectFolderToServerNamespace";
+import { openBPLDTLZenEditor } from "./commands/openBPLDTLZenEditor";
 
 import { getLanguageConfiguration } from "./languageConfiguration";
 
@@ -798,6 +799,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<any> {
     vscode.commands.registerCommand("vscode-objectscript.serverActions", serverActions),
     vscode.commands.registerCommand("vscode-objectscript.touchBar.viewOthers", viewOthers),
     vscode.commands.registerCommand("vscode-objectscript.explorer.refresh", () => explorerProvider.refresh()),
+    vscode.commands.registerCommand("vscode-objectscript.openBPLDTLZenEditor", openBPLDTLZenEditor),
     // Register the vscode-objectscript.explorer.open command elsewhere
     registerExplorerOpen(explorerProvider),
     vscode.commands.registerCommand("vscode-objectscript.explorer.export", (item, items) =>

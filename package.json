@@ -62,6 +62,7 @@
     "onCommand:vscode-objectscript.connectFolderToServerNamespace",
     "onCommand:vscode-objectscript.hideExplorerForWorkspace",
     "onCommand:vscode-objectscript.showExplorerForWorkspace",
+    "onCommand:vscode-objectscript.openBPLDTLZenEditor",
     "onLanguage:objectscript",
     "onLanguage:objectscript-class",
     "onLanguage:objectscript-macros",
@@ -608,6 +609,11 @@
         "category": "ObjectScript",
         "command": "vscode-objectscript.showExplorerForWorkspace",
         "title": "Show Explorer for Workspace"
+      },
+      {
+        "category": "ObjectScript",
+        "command": "vscode-objectscript.openBPLDTLZenEditor",
+        "title": "Open the Zen Editor for the current .bpl/.dtl file"
       }
     ],
     "keybindings": [
