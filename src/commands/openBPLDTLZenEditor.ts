@@ -38,13 +38,7 @@ export async function openBPLDTLZenEditor(): Promise<void> {
         enableScripts: true,
       }
     );
-    panel.webview.onDidReceiveMessage((message) => {
-      console.log(message);
-    });
-    // try to override alert and confirm and do a custom version
-    // also what coes enable scripts do and does that break anything
     const api = new AtelierAPI(file.uri);
-    //const api = new AtelierAPI();
     const apps = await api.getCSPApps(true);
     const webapp = apps.result.content.filter((app) => app.default)[0].name;
     const url = new URL(
