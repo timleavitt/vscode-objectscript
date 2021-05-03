@@ -1000,6 +1000,21 @@
           }
         ]
       }
+    ],
+    "customEditors": [
+      {
+        "viewType": "vscode-objectscript.bplEditor",
+        "displayName": "BPL Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.bpl"
+          },
+          {
+            "filenamePattern": "*.dtl"
+          }
+        ],
+        "priority": "default"
+      }
     ]
   },
   "scripts": {

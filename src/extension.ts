@@ -96,6 +96,7 @@ export let xmlContentProvider: XmlContentProvider;
 
 import TelemetryReporter from "vscode-extension-telemetry";
 import { CodeActionProvider } from "./providers/CodeActionProvider";
+import { BplEditorProvider } from "./providers/bplEditor";
 
 const packageJson = vscode.extensions.getExtension(extensionId).packageJSON;
 const extensionVersion = packageJson.version;
@@ -876,6 +877,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<any> {
       documentSelector("objectscript-class"),
       new ObjectScriptClassCodeLensProvider()
     ),
+    BplEditorProvider.register(),
 
     /* Anything we use from the VS Code proposed API */
     ...proposed

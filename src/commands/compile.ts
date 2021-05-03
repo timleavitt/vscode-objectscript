@@ -164,7 +164,7 @@ function updateOthers(others: string[], baseUri: vscode.Uri) {
         dotParts.length <= partsToConvert
           ? uri.path
           : dotParts.slice(0, partsToConvert).join("/") + "." + dotParts.slice(partsToConvert).join(".");
-      console.log(`updateOthers: uri.path=${uri.path} baseUri.path=${baseUri.path} correctPath=${correctPath}`);
+      //console.log(`updateOthers: uri.path=${uri.path} baseUri.path=${baseUri.path} correctPath=${correctPath}`);
       fileSystemProvider.fireFileChanged(uri.with({ path: correctPath }));
     } else {
       documentContentProvider.update(uri);
