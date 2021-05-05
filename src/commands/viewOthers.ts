@@ -5,7 +5,9 @@ import { DocumentContentProvider } from "../providers/DocumentContentProvider";
 import { currentFile } from "../utils";
 
 export async function viewOthers(): Promise<void> {
+  console.log("started others");
   const file = currentFile();
+  console.log("got file:", file.name);
   if (!file) {
     return;
   }
@@ -22,10 +24,14 @@ export async function viewOthers(): Promise<void> {
     return info.result.content[0].others;
   };
   const api = new AtelierAPI(file.uri);
+
+  console.log("in vie others with name:", file.name);
+
   return api
     .actionIndex([file.name])
     .then((info) => {
       const listOthers = getOthers(info) || [];
+      console.log("got others:", listOthers);
       if (!listOthers.length) {
         return;
       }

@@ -44,7 +44,7 @@ import {
 import { addServerNamespaceToWorkspace } from "./commands/addServerNamespaceToWorkspace";
 import { jumpToTagAndOffset } from "./commands/jumpToTagAndOffset";
 import { connectFolderToServerNamespace } from "./commands/connectFolderToServerNamespace";
-import { openBPLDTLZenEditor } from "./commands/openBPLDTLZenEditor";
+import { openBplDtlEditor } from "./commands/openBPLDTLEditor";
 
 import { getLanguageConfiguration } from "./languageConfiguration";
 
@@ -96,7 +96,7 @@ export let xmlContentProvider: XmlContentProvider;
 
 import TelemetryReporter from "vscode-extension-telemetry";
 import { CodeActionProvider } from "./providers/CodeActionProvider";
-import { BplEditorProvider } from "./providers/bplEditor";
+import { BplDtlEditorProvider } from "./providers/bplDtlEditor";
 
 const packageJson = vscode.extensions.getExtension(extensionId).packageJSON;
 const extensionVersion = packageJson.version;
@@ -800,7 +800,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<any> {
     vscode.commands.registerCommand("vscode-objectscript.serverActions", serverActions),
     vscode.commands.registerCommand("vscode-objectscript.touchBar.viewOthers", viewOthers),
     vscode.commands.registerCommand("vscode-objectscript.explorer.refresh", () => explorerProvider.refresh()),
-    vscode.commands.registerCommand("vscode-objectscript.openBPLDTLZenEditor", openBPLDTLZenEditor),
+    vscode.commands.registerCommand("vscode-objectscript.openBPLDTLZenEditor", openBplDtlEditor),
     // Register the vscode-objectscript.explorer.open command elsewhere
     registerExplorerOpen(explorerProvider),
     vscode.commands.registerCommand("vscode-objectscript.explorer.export", (item, items) =>
@@ -877,7 +877,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<any> {
       documentSelector("objectscript-class"),
       new ObjectScriptClassCodeLensProvider()
     ),
-    BplEditorProvider.register(),
+    BplDtlEditorProvider.register(),
 
     /* Anything we use from the VS Code proposed API */
     ...proposed

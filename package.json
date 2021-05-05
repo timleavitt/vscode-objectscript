@@ -1003,7 +1003,7 @@
     ],
     "customEditors": [
       {
-        "viewType": "vscode-objectscript.bplEditor",
+        "viewType": "vscode-objectscript.bplDtlEditor",
         "displayName": "BPL Editor",
         "selector": [
           {
