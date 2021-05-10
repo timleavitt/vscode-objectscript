@@ -62,6 +62,7 @@
     "onCommand:vscode-objectscript.connectFolderToServerNamespace",
     "onCommand:vscode-objectscript.hideExplorerForWorkspace",
     "onCommand:vscode-objectscript.showExplorerForWorkspace",
+    "onCommand:vscode-objectscript.openBPLDTLZenEditor",
     "onLanguage:objectscript",
     "onLanguage:objectscript-class",
     "onLanguage:objectscript-macros",
@@ -652,6 +653,11 @@
         "category": "ObjectScript",
         "command": "vscode-objectscript.editOthers",
         "title": "Edit Other"
+      },
+      {
+        "category": "ObjectScript",
+        "command": "vscode-objectscript.openBPLDTLZenEditor",
+        "title": "Open the Zen Editor for the current .bpl/.dtl file"
       }
     ],
     "keybindings": [
@@ -1073,6 +1079,21 @@
           "label": "${path} (read-only)",
           "separator": "/"
         }
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "vscode-objectscript.bplDtlEditor",
+        "displayName": "BPL Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.bpl"
+          },
+          {
+            "filenamePattern": "*.dtl"
+          }
+        ],
+        "priority": "default"
       }
     ]
   },

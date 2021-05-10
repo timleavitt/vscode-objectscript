@@ -45,6 +45,7 @@ import {
 import { addServerNamespaceToWorkspace } from "./commands/addServerNamespaceToWorkspace";
 import { jumpToTagAndOffset } from "./commands/jumpToTagAndOffset";
 import { connectFolderToServerNamespace } from "./commands/connectFolderToServerNamespace";
+import { openBplDtlEditor } from "./commands/openBPLDTLEditor";
 
 import { getLanguageConfiguration } from "./languageConfiguration";
 
@@ -98,6 +99,7 @@ export let xmlContentProvider: XmlContentProvider;
 
 import TelemetryReporter from "vscode-extension-telemetry";
 import { CodeActionProvider } from "./providers/CodeActionProvider";
+import { BplDtlEditorProvider } from "./providers/bplDtlEditor";
 
 const packageJson = vscode.extensions.getExtension(extensionId).packageJSON;
 const extensionVersion = packageJson.version;
@@ -795,6 +797,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<any> {
     vscode.commands.registerCommand("vscode-objectscript.serverActions", serverActions),
     vscode.commands.registerCommand("vscode-objectscript.touchBar.viewOthers", () => viewOthers(false)),
     vscode.commands.registerCommand("vscode-objectscript.explorer.refresh", () => explorerProvider.refresh()),
+    vscode.commands.registerCommand("vscode-objectscript.openBPLDTLZenEditor", openBplDtlEditor),
     // Register the vscode-objectscript.explorer.open command elsewhere
     registerExplorerOpen(explorerProvider),
     vscode.commands.registerCommand("vscode-objectscript.explorer.export", (item, items) =>
@@ -878,6 +881,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<any> {
       new DocumentLinkProvider()
     ),
     vscode.commands.registerCommand("vscode-objectscript.editOthers", () => viewOthers(true)),
+    BplDtlEditorProvider.register(),
 
     /* Anything we use from the VS Code proposed API */
     ...proposed

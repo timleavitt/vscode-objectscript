@@ -1,12 +1,17 @@
 import * as vscode from "vscode";
 import { AtelierAPI } from "../api";
 import { config } from "../extension";
+import { currentBplDtlClassDoc } from "../providers/bplDtlEditor";
 import { DocumentContentProvider } from "../providers/DocumentContentProvider";
 import { currentFile, outputChannel } from "../utils";
 
 export async function viewOthers(forceEditable = false): Promise<void> {
   const file = currentFile();
   if (!file) {
+    // BPL/DTL files are not supported for the standard view other method
+    if (currentBplDtlClassDoc) {
+      vscode.window.showTextDocument(currentBplDtlClassDoc);
+    }
     return;
   }
   if (file.uri.scheme === "file" && !config("conn").active) {
@@ -154,6 +159,7 @@ export async function viewOthers(forceEditable = false): Promise<void> {
     .actionIndex([indexarg])
     .then((info) => {
       const listOthers = getOthers(info) || [];
+      console.log("got others:", listOthers);
       if (!listOthers.length) {
         vscode.window.showInformationMessage("There are no other documents to open.", "Dismiss");
         return;

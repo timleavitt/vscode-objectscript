@@ -79,11 +79,14 @@ export function isImportableLocalFile(file: vscode.TextDocument): boolean {
 }
 
 export function currentFile(document?: vscode.TextDocument): CurrentFile {
+  //console.log("active text editor:", vscode.window.activeTextEditor);
   document =
     document ||
     (vscode.window.activeTextEditor && vscode.window.activeTextEditor.document
       ? vscode.window.activeTextEditor.document
       : null);
+  //console.log("got document:");
+  //console.log(document);
   if (!document) {
     return null;
   }
