@@ -32,7 +32,6 @@ export function outputConsole(data: string[]): void {
 }
 
 import { InputBoxManager } from "./inputBoxManager";
-import { currentBplDtlDocument } from "../providers/bplDtlEditor";
 export { InputBoxManager };
 
 // tslint:disable-next-line: interface-name
@@ -57,14 +56,14 @@ export interface ConnectionTarget {
 }
 
 export function currentFile(document?: vscode.TextDocument): CurrentFile {
-  console.log("active text editor:", vscode.window.activeTextEditor);
+  //console.log("active text editor:", vscode.window.activeTextEditor);
   document =
     document ||
     (vscode.window.activeTextEditor && vscode.window.activeTextEditor.document
       ? vscode.window.activeTextEditor.document
-      : currentBplDtlDocument || null);
-  console.log("got document:");
-  console.log(document);
+      : null);
+  //console.log("got document:");
+  //console.log(document);
   if (!document) {
     return null;
   }

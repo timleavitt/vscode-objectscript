@@ -19,7 +19,9 @@ import { currentFile } from "../utils/index";
 import { DocumentContentProvider } from "./DocumentContentProvider";
 import { loadChanges } from "../commands/compile";
 
-export let currentBplDtlDocument: vscode.TextDocument = null;
+// Custom text documents cannot be accessed through vscode.window.activeTextEditor
+// so they must be kept track of manually for the view other command
+export let currentBplDtlClassDoc: vscode.TextDocument = null;
 
 export class BplDtlEditorProvider implements vscode.CustomTextEditorProvider {
   public static register(): vscode.Disposable {
@@ -37,14 +39,15 @@ export class BplDtlEditorProvider implements vscode.CustomTextEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
-    // get the url of the zen editor
     const url = await this.getUrl(document);
     if (!url) return;
 
     const type = document.fileName.substring(document.fileName.length - 3);
     const clsName = document.fileName.substring(1, document.fileName.length - 4) + ".cls";
-    const clsUri = DocumentContentProvider.getUri(clsName);
-    const clsFile = currentFile(await vscode.workspace.openTextDocument(clsUri));
+    const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri);
+    const clsUri = DocumentContentProvider.getUri(clsName, workspaceFolder?.name);
+    const clsDoc = await vscode.workspace.openTextDocument(clsUri);
+    const clsFile = currentFile(clsDoc);
     let pageCompatible = false;
     this.isDirty = document.isDirty;
 
@@ -54,15 +57,12 @@ export class BplDtlEditorProvider implements vscode.CustomTextEditorProvider {
       enableScripts: true,
     };
     if (webviewPanel.active) {
-      currentBplDtlDocument = document;
+      currentBplDtlClassDoc = clsDoc;
     }
 
     webviewPanel.onDidChangeViewState(async (event) => {
-      console.log("on change view state");
       if (event.webviewPanel.active) {
-        const title = event.webviewPanel.title.substring(1);
-        const uri = DocumentContentProvider.getUri(title);
-        currentBplDtlDocument = await vscode.workspace.openTextDocument(uri);
+        currentBplDtlClassDoc = clsDoc;
       }
     });
 
@@ -85,6 +85,8 @@ export class BplDtlEditorProvider implements vscode.CustomTextEditorProvider {
         loadChanges([clsFile]);
       } else if (message.vscodeCompatible === true) {
         pageCompatible = true;
+      } else if (message.saveError) {
+        vscode.window.showErrorMessage(message.saveError);
       }
     });
 
@@ -160,10 +162,15 @@ export class BplDtlEditorProvider implements vscode.CustomTextEditorProvider {
 
   private async getUrl(document: vscode.TextDocument): Promise<URL> {
     // the url should be the first line of the file
-    const firstLine = document.getText(new vscode.Range(new vscode.Position(0, 0), new vscode.Position(1, 0)));
+    let firstLine = document.getText(new vscode.Range(new vscode.Position(0, 0), new vscode.Position(1, 0)));
+    //const firstLine = document.getText(new vscode.Range(new vscode.Position(0, 0), new vscode.Position(1, 0)));
+    //firstLine = firstLine.replace("DTLEditor", "DTLEditorOriginal");
+    firstLine = firstLine.replace("http", "https");
+    //firstLine = firstLine.replace("57776", "10443");
+    firstLine = firstLine.replace("52774", "11443");
+    firstLine = firstLine.replace("127.0.0.1", "localhost");
     const url = new URL(firstLine);
     const del = "/" + firstLine.split("/").slice(3).join("/");
-    console.log(del);
 
     // add studio mode and a csptoken to the url
     const api = new AtelierAPI(document.uri);

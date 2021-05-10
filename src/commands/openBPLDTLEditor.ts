@@ -21,7 +21,9 @@ export async function openBplDtlEditor(): Promise<void> {
   } else if (superClass.includes("Ens.BusinessProcessBPL")) {
     fileExtension = ".bpl";
   } else {
-    // TODO: provide a useful error message?
+    vscode.window.showErrorMessage(
+      "To open in a BPL/DTL Editor, the class must extend either Ens.BusinessProcessBPL or Ens.DataTransformDTL respectively."
+    );
     return;
   }
 
